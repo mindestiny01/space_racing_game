@@ -1,0 +1,199 @@
+<html>
+    <head>
+        <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;        
+        }
+        @font-face{
+        font-family:"snk";
+        src:url('snk.ttf') format('truetype');
+        }
+        *{
+            padding:0;
+            margin:0;
+            box-sizing:border-box;
+        }
+        body{
+            
+            color:white;
+            font-family: "snk";
+            background-image: url(Images/main-background.webp);
+            background-repeat: repeat;
+            text-align:center;
+        }
+        .matrix{
+            margin-top:40px;
+            
+        }
+        .container{
+            margin-top:20px;
+        }
+        .butsub{
+            
+           
+        }
+        .matrix-btn{
+            float:left;
+            margin-top:200px;
+        }
+        button {
+          cursor: pointer;
+          background: none;
+          border: 2px solid;
+          font: inherit;
+          line-height: 1;
+          margin: 0.5em;
+          padding: 0.5em 1em;
+          transition:0.25s;
+          color:white; 
+          font-size:20px;
+          border-radius:15%;
+          transition: all .2s ease-in-out;
+        }
+        button:hover{
+            transform: scale(1.1);
+            box-shadow:0 0 20px white;
+        }
+        input{
+        cursor: pointer;
+          background: none;
+          border: 2px solid;
+          font: inherit;
+          line-height: 1;
+          margin: 0.5em;
+          padding: 0.5em 1em;
+          transition:0.25s;
+          color:white; 
+          font-size:20px;
+          border-radius:15%;
+          transition: all .2s ease-in-out;
+        }
+        input:hover{
+            transform: scale(1.1);
+            box-shadow:0 0 20px red;
+        
+        }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+        <input type="file" name="f1" >
+        <input type="submit" value="Upload" onclick="upload()">
+        <br><br>
+        <div class="matrix">
+            <input type="number" id="a1" value="0" style="width:100px">
+            <input type="number" id="a2" value="0" style="width:100px">
+            <input type="number" id="a3" value="0" style="width:100px">
+            <input type="number" id="a4" value="0" style="width:100px"><br>
+            <input type="number" id="a5" value="0" style="width:100px">
+            <input type="number" id="a6" value="0" style="width:100px">
+            <input type="number" id="a7" value="0" style="width:100px">
+            <input type="number" id="a8" value="0" style="width:100px"><br>
+            <input type="number" id="a9" value="0" style="width:100px">
+            <input type="number" id="a10" value="0" style="width:100px">
+            <input type="number" id="a11" value="0" style="width:100px">
+            <input type="number" id="a12" value="0" style="width:100px">
+            <span id="res"></span>
+            <span id="show"></span>
+            
+        </div>
+        <button class="butsub" onclick="matrix();showdata()">Submit</button>
+        
+        <div class="matrix-btn">
+             <a href="index.html" style="color:yellow; font-size:40px"><img style="width:75px; transform:rotate(180deg); height:50px;vertical-align: middle;" src="Images/rightarrows.png">GO TO GAME PAGE</a>
+         </div>
+ 
+        </div>
+        <script>
+        const numInputs = document.querySelectorAll('input[type=number]')//Get all elements in the document with input type number
+
+        numInputs.forEach(function(input) {
+          input.addEventListener('change', function(e) {
+            if (e.target.value == '') {
+              e.target.value = 0
+            }
+          })
+        })
+            function upload()
+            {
+                let photo = document.getElementById("f1").files[0];
+                let req = new XMLHttpRequest();//xmlhttprequest is object can be use to exchange data with a server behind the scenes. it used to update parts of a web page, without reloading the whole page. so we can use ajax if we use this function
+                let formdata = new FormData();
+                formdata.append("photo", photo);
+                req.open("POST","upload.php",true);
+                req.send(formdata);
+                req.onreadystatechange = function(){
+                    if(this.readyState == 4 && this.status == 200){
+                        alert(this.responseText);
+                    }
+                }
+            }
+            function showdata()
+            {
+                let req = new XMLHttpRequest();//xmlhttprequest is object can be use to exchange data with a server behind the scenes. it used to update parts of a web page, without reloading the whole page. so we can use ajax if we use this function
+                req.open("POST","showdata.php",true);
+                req.send();
+                req.onreadystatechange = function(){
+                    if(this.readyState == 4 && this.status == 200){
+                        document.getElementById("show").innerHTML = "<br>" + this.responseText;// for max min and table
+                    }
+                }
+            }
+            function matrix()
+            {
+                let a1 = document.getElementById("a1").value;
+                let a2 = document.getElementById("a2").value;
+                let a3 = document.getElementById("a3").value;
+                let a4 = document.getElementById("a4").value;
+                let a5 = document.getElementById("a5").value;
+                let a6 = document.getElementById("a6").value;
+                let a7 = document.getElementById("a7").value;
+                let a8 = document.getElementById("a8").value;
+                let a9 = document.getElementById("a9").value;
+                let a10 = document.getElementById("a10").value;
+                let a11 = document.getElementById("a11").value;
+                let a12 = document.getElementById("a12").value;
+                
+                let req = new XMLHttpRequest();//xmlhttprequest is object can be use to exchange data with a server behind the scenes. it used to update parts of a web page, without reloading the whole page. so we can use ajax if we use this function
+                let formdata = new FormData();
+                formdata.append("a1", a1);
+                formdata.append("a2", a2);
+                formdata.append("a3", a3);
+                formdata.append("a4", a4);
+                formdata.append("a5", a5);
+                formdata.append("a6", a6);
+                formdata.append("a7", a7);
+                formdata.append("a8", a8);
+                formdata.append("a9", a9);
+                formdata.append("a10", a10);
+                formdata.append("a11", a11);
+                formdata.append("a12", a12);
+                
+                req.open("POST","matrix.php",true);//send to matrix.php
+                req.send(formdata);//also send the value of input matrix
+                req.onreadystatechange = function(){
+                    if(this.readyState == 4 && this.status == 200){
+                        alert("data has been inserted");
+                        document.getElementById("res").innerHTML = "<span style='font-size:30px;color:yellow;'><br>Your result : </span>" + "<span style='font-size:30px;color:yellow;'>"+this.responseText+"</span>";//showing the result of matrix
+                    }
+                }
+            }
+            
+            function deletedata(data)//this filled by ID from button delete in showdata.php
+            {
+                let req = new XMLHttpRequest();//xmlhttprequest is object can be use to exchange data with a server behind the scenes. it used to update parts of a web page, without reloading the whole page. so we can use ajax if we use this function
+                let formdata = new FormData();
+                formdata.append("data", data);
+                req.open("POST","delete.php",true);
+                req.send(formdata);
+                req.onreadystatechange = function(){//method in http or a function to be called when the readyState property changes
+                    if(this.readyState == 4 && this.status == 200){
+                        alert(this.responseText);
+                    }
+                }
+            }
+        </script>
+    </body>
+</html>

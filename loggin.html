@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login to Space Typing Game</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <style>
+    @font-face{
+    font-family:"snk";
+    src:url('snk.ttf') format('truetype');
+    }
+    body{
+        font-family:"snk";
+    
+}
+      input{
+          font-family:"snk";
+      }
+      button{
+          font-family:"snk";
+      }
+  </style>
+</head>
+<body style="background-image:url('Images/login-gif.gif'); background-repeat: no-repeat; background-size: cover; color:white;">
+  <div class="header" style="background:none; color:orange;">
+  	<h2 style="font-size:40px;">Login</h2>
+  </div>
+	 
+ <div class="form" style="background:none; font-size:30px;">
+  	<div class="input-group" >
+  		<label style="color:red">Username</label>
+  		<input type="text" name="username" id="username">
+  	</div>
+  	<div class="input-group">
+  		<label style="color:green">Password</label>
+  		<input type="password" name="password" id="password">
+  	</div>
+  	<div class="input-group">
+  		<button type="submit" class="btn" name="login_user" onclick="checkUser()">Login</button>
+  	</div>
+  	<p>
+  		Not yet a member? <a href="regis.html">Sign up</a>
+  	</p>
+  </div>
+  
+  <script>
+      function checkUser(){
+        let username = document.getElementById("username").value;//get value from input box
+        let password = document.getElementById("password").value;
+        
+        let req = new XMLHttpRequest();//xmlhttprequest is object can be use to exchange data with a server behind the scenes. it used to update parts of a web page, without reloading the whole page. so we can use ajax if we use this function
+        let formData = new FormData();//create a form data to stored the input to be validate in server
+        formData.append("username", username);//value of username send/insert to the form data
+        formData.append("password", password);//value of password send/insert to the form data
+        formData.append("status","validate");//to ask the server to validate the account
+        req.open("POST", "main.php", true);//method to create a request to a server in xmlhttprequest 
+        req.send(formData);// method to send a request to a server in xmlhttprequest 
+        req.onreadystatechange = function() {//method in http or a function to be called when the readyState property changes
+            if (req.readyState == 4 && req.status == 200) {// to see if the ready state is ==4(request finished and response is ready) & status is for the page, if status 200 it means "ok" if 404 = page not found
+                console.log(req.responseText);//respond data as a string in console 
+                
+                if(req.responseText == "y")
+                {
+                    window.location.href = 'index.html';// go to the page index.html if respon text is "y"
+                } else
+                {
+                    alert("please check again your input!");
+                }
+            }
+        }
+      }
+  </script>
+</body>
+</html>
